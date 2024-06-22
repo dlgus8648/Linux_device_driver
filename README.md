@@ -60,8 +60,8 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |21. Device Tree Driver for an I2C device|WEB|
 |22. Device Tree Driver for an SPI device|WEB|
 |23. Dynamical memory management in a Linux Kernel Module|WEB|
-|22. Misc device|WEB|
-|23. Mutex exclusive access to shared resources|WEB / EXE|
+|24. Misc device|WEB|
+|25. Mutex exclusive access to shared resources|WEB / EXE|
 
 
 
