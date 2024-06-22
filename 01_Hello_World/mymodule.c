@@ -3,8 +3,8 @@
 
 /* Meta Information */
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Johannes 4 GNU/Linux");
-MODULE_DESCRIPTION("A hello world LKM");
+MODULE_AUTHOR("KIMRIHYEON");
+MODULE_DESCRIPTION("A hello world ");
 
 /**
  * @brief This function is called, when the module is loaded into the kernel
