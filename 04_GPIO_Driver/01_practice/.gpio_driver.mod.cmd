@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/04_GPIO_Driver/01_practice/gpio_driver.mod := { echo  /home/kim/Linux_device_driver/04_GPIO_Driver/01_practice/gpio_driver.o;  echo; } > /home/kim/Linux_device_driver/04_GPIO_Driver/01_practice/gpio_driver.mod
