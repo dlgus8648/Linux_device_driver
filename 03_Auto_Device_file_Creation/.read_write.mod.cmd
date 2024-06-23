@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/03_Auto_Device_file_Creation/read_write.mod := { echo  /home/kim/Linux_device_driver/03_Auto_Device_file_Creation/read_write.o;  echo; } > /home/kim/Linux_device_driver/03_Auto_Device_file_Creation/read_write.mod
