@@ -9,17 +9,17 @@ The goal of this project is to provide hands-on experience in developing Linux d
 
 |Project|Features|
 |---|---|
-|1. Hello World Linux Kernel Module|WEB|
-|2. Device Numbers and Files|WEB / EXE|
+|1. Hello World Linux Kernel Module|---|
+|2. Device Numbers and Files|---|
 |3. Auto Device File creation & Read - Write - Callback|---|
-|4. GPIO driver|WEB|
+|4. GPIO driver|---|
 |5.1 LCD Display Driver(SSD1306) using I2C protocol|---|
 |5.2 LCD Display Driver(SSD1306) using SPI protocol|---|
 |6. PWM Driver|---|
 |7. Temperature Sensor(BMP280) using I2C protocol|---|
 |8. Temperature Sensor(BMP280) using SPI protocol|---|
 |9. High Resolution Timer in a Linux Kerenel Module|---|
-|10. Parameters for a Linux Kerenl Module|WEB|
+|10. Parameters for a Linux Kerenl Module|---|
 |11. IOCTL in a Linux kerenl module|---|
 |12. Treads in a Linux Kerenl Module|---|
 |13. Sending a signal from Kerenl to Userspace|---|
