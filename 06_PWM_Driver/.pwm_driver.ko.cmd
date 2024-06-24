@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/06_PWM_Driver/pwm_driver.ko := ld -r  -EL  -maarch64elf  --build-id  -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds -o /home/kim/Linux_device_driver/06_PWM_Driver/pwm_driver.ko /home/kim/Linux_device_driver/06_PWM_Driver/pwm_driver.o /home/kim/Linux_device_driver/06_PWM_Driver/pwm_driver.mod.o;  true
