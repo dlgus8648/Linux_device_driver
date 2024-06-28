@@ -18,7 +18,7 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |[6. PWM Driver](https://github.com/dlgus8648/Linux_device_driver/tree/main/06_PWM_Driver)|---|
 |7. Temperature Sensor(BMP280) using I2C protocol|---|
 |[8. GPIO_IRQ](https://github.com/dlgus8648/Linux_device_driver/tree/main/08_GPIO_IRQ)|---|
-|9. High Resolution Timer in a Linux Kerenel Module|---|
+|[9. High Resolution Timer in a Linux Kerenel Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/09_High_Resolution_Timer)|---|
 |10. Parameters for a Linux Kerenl Module|---|
 |11. IOCTL in a Linux kerenl module|---|
 |12. Treads in a Linux Kerenl Module|---|
