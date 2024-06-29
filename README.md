@@ -19,8 +19,8 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |7. Temperature Sensor(BMP280) using I2C protocol|---|
 |[8. GPIO_IRQ](https://github.com/dlgus8648/Linux_device_driver/tree/main/08_GPIO_IRQ)|---|
 |[9. High Resolution Timer in a Linux Kerenel Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/09_High_Resolution_Timer)|---|
-|10. Parameters for a Linux Kerenl Module|---|
-|11. IOCTL in a Linux kerenl module|---|
+|[10. Parameters for a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/10_Parameters_for_LKM)|---|
+|[11. IOCTL in a Linux kerenl module](https://github.com/dlgus8648/Linux_device_driver/tree/main/11_IOCTL_in_LKM)|---|
 |12. Treads in a Linux Kerenl Module|---|
 |13. Sending a signal from Kerenl to Userspace|---|
 |14. The Poll Callback in a Linux Kerenl Module|---|
