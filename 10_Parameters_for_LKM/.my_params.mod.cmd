@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/10_Parameters_for_LKM/my_params.mod := { echo  /home/kim/Linux_device_driver/10_Parameters_for_LKM/my_params.o;  echo; } > /home/kim/Linux_device_driver/10_Parameters_for_LKM/my_params.mod

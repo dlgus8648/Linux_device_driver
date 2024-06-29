@@ -1,0 +1,2 @@
+/home/kim/Linux_device_driver/10_Parameters_for_LKM/my_params.o
+
