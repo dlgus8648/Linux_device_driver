@@ -9,7 +9,7 @@ The module indicates that the registered device number has a `Major number of 64
 
 ## 2. Device Node Creation:
 
-![2](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/cee1d889-839d-4279-ab84-faa801be9315)
+![3](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/7c987dc2-9369-46c3-ab9d-0c6f5c651953)
 
 A device node named `/dev/dummy` has been created with `Major number 64` and `Minor number 0`.  
 This node provides an interface to interact with the `ioctl_example` module.
