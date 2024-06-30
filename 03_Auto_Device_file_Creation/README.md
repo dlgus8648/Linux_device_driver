@@ -1,4 +1,8 @@
 
+# 03_Auto_Device_file_Creation
+
+![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/e1d54135-1c07-43d3-a42e-27c2ed2f7591)
+
 ```markdown
 # Linux Device Driver Module: `read_write.ko`
 
@@ -35,6 +39,7 @@ The following steps outline the process of loading a kernel module (`read_write.
    ```
 
 3. **Set Device File Permissions**
+![3](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/fed19da1-6247-4a11-9bb1-d485eae7e86b)
 
    Modify the permissions of the device file to allow read and write access to all users.
 
