@@ -43,6 +43,9 @@ This project demonstrates how to handle GPIO (General Purpose Input/Output) inte
    Wait for signal...
    ```
 
+![제목 없음](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/6750ff92-a56f-4cc8-8d66-589ba41056fe)
+
+
 4. **Trigger the GPIO Interrupt:**
 
    Press the button or perform the action that triggers the GPIO interrupt. You should see messages indicating that the button was pressed:
@@ -75,12 +78,8 @@ This project demonstrates how to handle GPIO (General Purpose Input/Output) inte
    [  791.902612] gpio_irq_signal: Interrupt was triggered and ISR was called!
    ```
 
-## Cleanup
+## DEMO
 
-To remove the kernel module and clean up the compiled files, run:
 
-```sh
-sudo rmmod gpio_irq_signal
-make clean
-```
+https://github.com/dlgus8648/Linux_device_driver/assets/139437162/5c52e975-90ac-4c9c-8d7a-b2a39074cebc
 
