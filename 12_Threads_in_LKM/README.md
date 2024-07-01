@@ -1,4 +1,4 @@
-```markdown
+
 # Linux Kernel Module: Kthread Example
 
 This Linux Kernel Module (LKM) demonstrates the usage of kernel threads (kthreads) in a simple example. The module creates two kernel threads that increment separate counters and log their activity to the kernel log.
@@ -10,7 +10,7 @@ This example showcases how to create and manage kernel threads within a Linux Ke
 - kthread 1 runs every one second
 - kthread 2 runs every two seconds.
 
-
+```markdown
 ## Kernel Log Output
 
 The following is a sample output of the kernel log after loading the module and observing the kthread behavior:
