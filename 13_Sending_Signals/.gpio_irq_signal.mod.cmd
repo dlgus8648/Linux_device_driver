@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/13_Sending_Signals/gpio_irq_signal.mod := { echo  /home/kim/Linux_device_driver/13_Sending_Signals/gpio_irq_signal.o;  echo; } > /home/kim/Linux_device_driver/13_Sending_Signals/gpio_irq_signal.mod
