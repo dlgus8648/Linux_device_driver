@@ -10,33 +10,17 @@ This example showcases how to create and manage kernel threads within a Linux Ke
 - kthread 1 runs every one second
 - kthread 2 runs every two seconds.
 
-```markdown
+
+
+
 ## Kernel Log Output
 
 The following is a sample output of the kernel log after loading the module and observing the kthread behavior:
 
-```bash
-[124552.691358] kthread - Thread 1 is executed! Counter val: 0
-[124552.691401] kthread - Thread 2 was created and is running now!
-[124552.691403] kthread - Both threads are running now!
-[124552.691406] kthread - Thread 2 is executed! Counter val: 0
-[124553.695772] kthread - Thread 1 is executed! Counter val: 1
-[124554.719768] kthread - Thread 1 is executed! Counter val: 2
-[124554.719788] kthread - Thread 2 is executed! Counter val: 1
-[124555.743780] kthread - Thread 1 is executed! Counter val: 3
-[124556.735769] kthread - Thread 2 is executed! Counter val: 2
-[124556.767771] kthread - Thread 1 is executed! Counter val: 4
-[124558.815794] kthread - Thread 1 is executed! Counter val: 6
-[124559.839780] kthread - Thread 1 is executed! Counter val: 7
-[124560.767791] kthread - Thread 2 is executed! Counter val: 4
-[124560.863794] kthread - Thread 1 is executed! Counter val: 8
-[124561.887787] kthread - Thread 1 is executed! Counter val: 9
-[124562.783790] kthread - Thread 2 is executed! Counter val: 5
-[124562.911772] kthread - Thread 1 is executed! Counter val: 10
-[124563.935790] kthread - Thread 1 is executed! Counter val: 11
-[124564.799786] kthread - Thread 2 is executed! Counter val: 6
-[124564.959774] kthread - Thread 1 is executed! Counter val: 12
-```
+
+![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/a8af8cb0-1f3a-4512-9faa-0b6a81d9b496)
+
+
 
 ## Installation and Usage
 
