@@ -21,8 +21,8 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |[9. High Resolution Timer in a Linux Kerenel Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/09_High_Resolution_Timer)|---|
 |[10. Parameters for a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/10_Parameters_for_LKM)|---|
 |[11. IOCTL in a Linux kerenl module](https://github.com/dlgus8648/Linux_device_driver/tree/main/11_IOCTL_in_LKM)|---|
-|12. Treads in a Linux Kerenl Module|---|
-|13. Sending a signal from Kerenl to Userspace|---|
+|[12. Treads in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/12_Threads_in_LKM)|---|
+|[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|---|
 |14. The Poll Callback in a Linux Kerenl Module|---|
 |15. Waitqueues in a Linux Kerenl Module|---|
 |16. Create procfs entries from a Linux Kernel Module|---|
