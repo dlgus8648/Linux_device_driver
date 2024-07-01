@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/12_Threads_in_LKM/kthread.mod := { echo  /home/kim/Linux_device_driver/12_Threads_in_LKM/kthread.o;  echo; } > /home/kim/Linux_device_driver/12_Threads_in_LKM/kthread.mod

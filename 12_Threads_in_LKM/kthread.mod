@@ -1,0 +1,2 @@
+/home/kim/Linux_device_driver/12_Threads_in_LKM/kthread.o
+
