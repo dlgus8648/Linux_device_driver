@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/15_Waitqueues_in_LKM/waitqueue.mod := { echo  /home/kim/Linux_device_driver/15_Waitqueues_in_LKM/waitqueue.o;  echo; } > /home/kim/Linux_device_driver/15_Waitqueues_in_LKM/waitqueue.mod
