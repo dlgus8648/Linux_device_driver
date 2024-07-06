@@ -24,7 +24,7 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |[12. Treads in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/12_Threads_in_LKM)|---|
 |[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|---|
 |[14. The Poll Callback in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/14_The_Poll_Callback_in_LKM)|---|
-|15. Waitqueues in a Linux Kerenl Module|---|
+|[15. Waitqueues in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/15_Waitqueues_in_LKM)|---|
 |16. Create procfs entries from a Linux Kernel Module|---|
 |17. Create sysfs entries from a Linux Kernel Module|---|
 |18. Parsing from the Device tree in a Linux Kerenl Module|---|
