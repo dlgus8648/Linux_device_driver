@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/20_Kobject/kobject.ko := ld -r  -EL  -maarch64elf  --build-id  -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds -o /home/kim/Linux_device_driver/20_Kobject/kobject.ko /home/kim/Linux_device_driver/20_Kobject/kobject.o /home/kim/Linux_device_driver/20_Kobject/kobject.mod.o;  true
