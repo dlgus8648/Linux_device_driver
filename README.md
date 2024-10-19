@@ -16,8 +16,6 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |[5. PWM Driver](https://github.com/dlgus8648/Linux_device_driver/tree/main/05_PWM_Driver)|---|
 |[06_Temperature_Sensor_I2C](https://github.com/dlgus8648/Linux_device_driver/tree/main/06_Temperature_Sensor_I2C)|---|
 |[07_Temperature_Sensor_SPI/spi_bmp280](https://github.com/dlgus8648/Linux_device_driver/tree/main/07_Temperature_Sensor_SPI/spi_bmp280)|---|
-
-|7. Temperature Sensor(BMP280) using I2C protocol|---|
 |[8. GPIO_IRQ](https://github.com/dlgus8648/Linux_device_driver/tree/main/08_GPIO_IRQ)|---|
 |[9. High Resolution Timer in a Linux Kerenel Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/09_High_Resolution_Timer)|---|
 |[10. Parameters for a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/10_Parameters_for_LKM)|---|
@@ -26,11 +24,11 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|---|
 |[14. The Poll Callback in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/14_The_Poll_Callback_in_LKM)|---|
 |[15. Waitqueues in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/15_Waitqueues_in_LKM)|---|
-|16. Create procfs entries from a Linux Kernel Module|---|
-|17. Create sysfs entries from a Linux Kernel Module|---|
-|18. Parsing from the Device tree in a Linux Kerenl Module|---|
-|19. Device Tree GPIO Driver|---|
-|20. Device Tree Driver for an I2C device|---|
+|[16_Mutex](https://github.com/dlgus8648/Linux_device_driver/tree/main/16_Mutex)|---|
+|[17_Misc](https://github.com/dlgus8648/Linux_device_driver/tree/main/17_Misc)|---|
+|[18_dt_probe](https://github.com/dlgus8648/Linux_device_driver/tree/main/18_dt_probe)|---|
+|[19_DMA](https://github.com/dlgus8648/Linux_device_driver/tree/main/19_DMA)|---|
+|[20_Kobject](https://github.com/dlgus8648/Linux_device_driver/tree/main/20_Kobject)|---|
 |21. Device Tree Driver for an SPI device|---|
 |22. Dynamical memory management in a Linux Kernel Module|---|
 |23. Misc device|---|
