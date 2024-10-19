@@ -15,7 +15,7 @@ static struct i2c_adapter * bmp_i2c_adapter = NULL;
 static struct i2c_client * bmp280_i2c_client = NULL;
 
 /* Meta Information */
-MODULE_AUTHOR("Johannes 4Linux");
+MODULE_AUTHOR("KIMRIHYEON");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("A driver for reading out a BMP280 temperature sensor");
 MODULE_SUPPORTED_DEVICE("NONE");
