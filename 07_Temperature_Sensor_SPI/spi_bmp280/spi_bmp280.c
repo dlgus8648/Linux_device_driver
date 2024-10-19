@@ -4,7 +4,7 @@
 
 /* Meta Information */
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Johannes 4 GNU/Linux");
+MODULE_AUTHOR("KIMRIHYEON");
 MODULE_DESCRIPTION("A simple LKM to read and write some registers of a BMP280 sensor");
 
 
