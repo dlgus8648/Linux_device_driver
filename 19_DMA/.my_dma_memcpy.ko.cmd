@@ -1,0 +1,1 @@
+cmd_/home/kim/Linux_device_driver/19_DMA/my_dma_memcpy.ko := ld -r  -EL  -maarch64elf  --build-id  -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds -o /home/kim/Linux_device_driver/19_DMA/my_dma_memcpy.ko /home/kim/Linux_device_driver/19_DMA/my_dma_memcpy.o /home/kim/Linux_device_driver/19_DMA/my_dma_memcpy.mod.o;  true
