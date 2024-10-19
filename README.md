@@ -29,10 +29,7 @@ The goal of this project is to provide hands-on experience in developing Linux d
 |[18_dt_probe](https://github.com/dlgus8648/Linux_device_driver/tree/main/18_dt_probe)|---|
 |[19_DMA](https://github.com/dlgus8648/Linux_device_driver/tree/main/19_DMA)|---|
 |[20_Kobject](https://github.com/dlgus8648/Linux_device_driver/tree/main/20_Kobject)|---|
-|21. Device Tree Driver for an SPI device|---|
-|22. Dynamical memory management in a Linux Kernel Module|---|
-|23. Misc device|---|
-|24. Mutex exclusive access to shared resources|---|
+
 
 
 
