@@ -1,6 +1,7 @@
 # Linux Device Driver Development Practice using Raspberry Pi 4B
 
 This repository contains practice exercises for developing Linux device drivers using the Raspberry Pi 4B.
+라즈베리파이 커널버전명시
 
 ## Introduction
 
