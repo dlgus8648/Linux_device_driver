@@ -28,3 +28,47 @@ A message indicating that the device has been successfully opened is displayed.
 ![4](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/054508a1-4398-49b3-b58b-8f3ebb6e3779)
 
 Verify the module's operation and status by checking the kernel message log.
+
+이 코드는 IOCTL (Input/Output Control)을 사용하는 간단한 Linux 커널 모듈입니다. IOCTL은 사용자 공간에서 커널 공간으로 데이터를 전송하거나 커널 공간에서 데이터를 가져오는 메커니즘입니다. 함수 호출 순서는 다음과 같습니다.
+
+### 1. 모듈 로드 시 (`ModuleInit` 호출)
+   - `module_init()` 매크로에 의해 **ModuleInit** 함수가 커널 모듈이 로드될 때 호출됩니다.
+
+#### 1-1. **register_chrdev()** 호출
+   - **문자 디바이스 등록**: `register_chrdev()` 함수는 Major 번호(`MYMAJOR = 64`)와 함께 문자 디바이스를 등록합니다.
+   - 성공 시 "Device number Major: %d, Minor: %d" 메시지를 출력합니다.
+   - 등록에 실패하면 에러 메시지를 출력하고, 모듈 로드를 중단합니다.
+
+### 2. 디바이스 파일 조작 시 (열기, IOCTL 호출, 닫기)
+
+#### 2-1. **driver_open()** 호출
+   - **디바이스 파일 열기**: `fops` 구조체의 `.open` 콜백으로 `driver_open()` 함수가 호출됩니다.
+   - 디바이스 파일이 열릴 때 "ioctl_example - open was called!" 메시지를 출력합니다.
+
+#### 2-2. **my_ioctl()** 호출
+   - **IOCTL 요청 처리**: `fops` 구조체의 `.unlocked_ioctl` 콜백으로 `my_ioctl()` 함수가 호출됩니다.
+   - `my_ioctl()`은 전달된 IOCTL 명령어에 따라 서로 다른 작업을 수행합니다.
+
+##### 2-2-1. **WR_VALUE** 명령 처리
+   - `WR_VALUE` 명령어를 받으면 `copy_from_user()`를 통해 사용자 공간에서 `answer` 값을 커널 공간으로 복사합니다.
+   - 복사 성공 시 "Update the answer to %d" 메시지를 출력합니다.
+
+##### 2-2-2. **RD_VALUE** 명령 처리
+   - `RD_VALUE` 명령어를 받으면 `copy_to_user()`를 통해 커널 공간의 `answer` 값을 사용자 공간으로 복사합니다.
+   - 복사 성공 시 "The answer was copied!" 메시지를 출력합니다.
+
+##### 2-2-3. **GREETER** 명령 처리
+   - `GREETER` 명령어를 받으면 구조체 `mystruct`의 데이터를 `copy_from_user()`로 사용자 공간에서 커널로 복사합니다.
+   - 복사 성공 시 "X greets to Y" 형식으로 메시지를 출력합니다. (`repeat` 횟수만큼 `name`에게 인사)
+
+#### 2-3. **driver_close()** 호출
+   - **디바이스 파일 닫기**: `fops` 구조체의 `.release` 콜백으로 `driver_close()` 함수가 호출됩니다.
+   - 디바이스 파일이 닫힐 때 "ioctl_example - close was called!" 메시지를 출력합니다.
+
+### 3. 모듈 언로드 시 (`ModuleExit` 호출)
+   - `module_exit()` 매크로에 의해 **ModuleExit** 함수가 모듈이 언로드될 때 호출됩니다.
+
+#### 3-1. **unregister_chrdev()** 호출
+   - **문자 디바이스 해제**: `unregister_chrdev()` 함수는 등록된 문자 디바이스를 해제하고, 더 이상 사용할 수 없도록 합니다.
+   - 모듈이 언로드되면 "Goodbye, Kernel" 메시지를 출력합니다.
+
