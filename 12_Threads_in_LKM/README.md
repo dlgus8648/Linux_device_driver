@@ -55,7 +55,7 @@ The following is a sample output of the kernel log after loading the module and 
 
 This example is inspired by various online resources and kernel module development guides.
 
-```
+## B. 함수 호출 순서
 
 이 코드는 두 개의 커널 스레드를 생성하여 실행하는 간단한 Linux 커널 모듈입니다. 각 스레드는 주기적으로 메시지를 출력하며, 모듈이 언로드될 때 스레드가 종료됩니다. 함수 호출 순서는 다음과 같습니다.
 
