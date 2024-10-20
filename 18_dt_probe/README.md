@@ -1,3 +1,10 @@
+## A. Demo
+![dt_probe](https://github.com/user-attachments/assets/7c04872f-83d5-4622-845b-1bc227e85e29)
+![dt_probe2](https://github.com/user-attachments/assets/846eaa94-59ef-464e-8041-9d8ea239f9ef)
+![dt_probe3](https://github.com/user-attachments/assets/4c6de300-00e4-46a2-a61b-5082dd37db3f)
+
+
+
 ## B. 함수 호출 순서
 
 이 코드는 플랫폼 드라이버가 로드될 때 장치 트리(Device Tree)에서 특정 장치 및 해당 속성을 파싱하여 처리하는 Linux 커널 모듈입니다. 함수 호출 순서는 다음과 같습니다.
