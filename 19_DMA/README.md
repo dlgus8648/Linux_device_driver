@@ -1,3 +1,5 @@
+## A. Demo
+![dma](https://github.com/user-attachments/assets/f6a8b632-f317-4d89-920a-d138a3ac533d)
 
 ## B. 함수 호출 순서
 이 코드는 RAM에서 RAM으로 데이터를 복사하는 DMA(Direct Memory Access)를 사용하는 간단한 예제입니다. DMA 채널을 요청하고 데이터를 전송하며, DMA 전송이 완료되면 콜백 함수를 호출하여 작업이 완료되었음을 알립니다. 함수 호출 순서는 다음과 같습니다.
