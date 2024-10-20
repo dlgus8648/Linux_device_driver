@@ -2,20 +2,47 @@
 
 ![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/ac3e40f3-c113-40a6-b3d6-4c68233eda78)
 
-
-### Interpretation
+### 설명
 
 1. **`[   73.506131] Hello, Kernel!`**
-   - **Timestamp**: `73.506131 seconds` after the kernel has booted.
-   - **Message**: "Hello, Kernel!" - This is a informational message from the kernel.
+   - **타임스탬프**: 커널 부팅 후 `73.506131초` 지남.
+   - **메시지**: "Hello, Kernel!" - 커널로부터의 정보성 메시지.
 
 2. **`[   73.606154] start_t - now_t = 100`**
-   - **Timestamp**: `73.606154 seconds` after the kernel has booted.
-   - **Message**: The difference between two timestamps `start_t` and `now_t` is `100`.
-   - **Explanation**: 
-     - The difference `start_t - now_t` equals `100 milliseconds`.
-     - Calculation: `73.606154 - 73.506131 = 0.100023 seconds = 100 milliseconds`.
+   - **타임스탬프**: 커널 부팅 후 `73.606154초` 지남.
+   - **메시지**: 두 타임스탬프 `start_t`와 `now_t`의 차이가 `100`이라는 의미.
+   - **설명**: 
+     - 차이 `start_t - now_t`가 `100밀리초`라는 뜻.
+     - 계산: `73.606154 - 73.506131 = 0.100023초 = 100밀리초`.
 
-### Summary
+### 요약
 
-The kernel messages indicate that at approximately `73.506131 seconds` after boot, the kernel printed "Hello, Kernel!". Subsequently, at `73.606154 seconds` after boot, it calculated and printed the difference between two timestamps (`start_t` and `now_t`), which was `100 milliseconds`. 
+이 커널 메시지는 커널이 부팅된 지 약 `73.506131초` 후에 "Hello, Kernel!"이라는 메시지를 출력했고, 이후 `73.606154초`가 지난 시점에 두 타임스탬프(`start_t`와 `now_t`) 사이의 차이가 `100밀리초`임을 계산하고 출력한 것을 나타냅니다.
+
+이 코드는 Linux 커널 모듈에서 고해상도 타이머(high-resolution timer)를 사용하는 예제입니다. 이 타이머는 모듈이 로드되면 설정되고, 지정된 시간이 지나면 인터럽트를 발생시켜 등록된 핸들러 함수를 호출합니다. 함수 호출 순서는 다음과 같습니다.
+
+### 1. 모듈 로드 시 (`ModuleInit` 호출)
+   - `module_init()` 매크로에 의해 **ModuleInit** 함수가 커널 모듈이 로드될 때 호출됩니다.
+
+#### 1-1. **hrtimer_init()** 호출
+   - **타이머 초기화**: `hrtimer_init()` 함수는 고해상도 타이머 `my_hrtimer`를 초기화합니다. 타이머는 `CLOCK_MONOTONIC` 시계로 설정되고, 상대적인 시간 기준(HRTIMER_MODE_REL)으로 동작하도록 설정됩니다.
+   - 타이머가 만료되었을 때 호출될 콜백 함수인 `test_hrtimer_handler`가 등록됩니다.
+
+#### 1-2. **hrtimer_start()** 호출
+   - **타이머 시작**: `hrtimer_start()` 함수로 타이머가 시작됩니다. 타이머는 100밀리초 후에 만료되도록 설정됩니다.
+   - `start_t` 변수에 현재 시간을 jiffies 단위로 저장합니다.
+
+### 2. 타이머 만료 시 (`test_hrtimer_handler` 호출)
+   - 타이머가 100밀리초 후에 만료되면 **test_hrtimer_handler** 함수가 호출됩니다.
+
+#### 2-1. **현재 시간과 경과 시간 계산**
+   - 타이머가 만료되면, 현재 시간을 `jiffies` 값으로 가져옵니다.
+   - `jiffies_to_msecs()` 함수를 사용하여 타이머 시작 시점(`start_t`)과 현재 시점의 차이를 밀리초 단위로 계산합니다.
+   - 그 값을 출력한 후, 타이머를 다시 시작하지 않도록 `HRTIMER_NORESTART`를 반환합니다.
+
+### 3. 모듈 언로드 시 (`ModuleExit` 호출)
+   - `module_exit()` 매크로에 의해 **ModuleExit** 함수가 모듈이 언로드될 때 호출됩니다.
+
+#### 3-1. **hrtimer_cancel()** 호출
+   - **타이머 취소**: `hrtimer_cancel()` 함수로 타이머를 취소하고, 더 이상 타이머가 만료되지 않도록 설정합니다.
+
