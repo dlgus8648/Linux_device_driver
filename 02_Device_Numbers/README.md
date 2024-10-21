@@ -1,6 +1,6 @@
 
 # 02_Device Numbers Kernel Module
-
+# 관련 개념
 ### 1. 디바이스 파일 (Device File)
 디바이스 파일은 커널의 하드웨어 장치나 가상 장치를 나타내는 특별한 유형의 파일입니다. 
 디바이스 파일을 사용하여 사용자는 하드웨어 장치에 접근할 수 있습니다.
@@ -17,7 +17,7 @@
 
 
 
-# 02_01 디바이스 파일 생성방법(register_chrdev())
+# 실습 : 02_01 디바이스 파일 생성방법(register_chrdev())
 ![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/a628118c-a8d1-4553-a622-28000e6cf2ee)
 ## 설명
 "Device Numbers" 모듈은 문자 디바이스를 등록하고 주요 장치 번호(major device number)를 할당하는 리눅스 커널 모듈입니다. 
@@ -59,7 +59,7 @@ kim@kimrihyeon:~/Linux_device_driver/02_Device_Numbers$ cat /proc/devices | grep
 
 ---
 
-# 02_02 디바이스파일 생성방법(mknod 명령어)
+# 실습 : 02_02 디바이스파일 생성방법(mknod 명령어)
 
 ![2](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/68927307-634e-407a-9fe5-a947a62d4589)
 ![3](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/8750263e-4988-4760-b5f0-6e2ae64580fe)
