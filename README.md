@@ -26,7 +26,7 @@
 |[12. Treads in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/12_Threads_in_LKM)|- kthread()<br>- kernel_thread()|
 |[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|HW-인터럽트|
 |[14. The Poll Callback in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/14_The_Poll_Callback_in_LKM)|HW-폴링|
-|[15. Waitqueues in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/15_Waitqueues_in_LKM)|- 프로세스<br>- 스케줄링|
+|[15. Waitqueues in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/15_Waitqueues_in_LKM)|- 블록킹<br>- 스케줄링|
 |[16_Mutex](https://github.com/dlgus8648/Linux_device_driver/tree/main/16_Mutex)|-mutex<br>- sempahore<br>- spinlock<br>- seqlock|
 |[17_Misc](https://github.com/dlgus8648/Linux_device_driver/tree/main/17_Misc)|---|
 |[18_dt_probe](https://github.com/dlgus8648/Linux_device_driver/tree/main/18_dt_probe)|-Device tree<br>probe()<br>platform_driver()|
