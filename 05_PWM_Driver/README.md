@@ -1,26 +1,38 @@
 #  /boot/firmware/usercfg.txt
 ![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/2d0f36f8-56c1-43b7-8159-8987cf5ccbb3)
 
-## Configuration Changes
 
-The following changes should be placed in the `config.txt` file:
-**Enable PWM on Two Channels**:
+##  /boot/firmware/usercfg.txt파일수정
+
+**두 개의 채널에서 PWM 활성화**:
    ```
    dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
    ```
-   This line enables PWM on two channels. It configures pin 12 and pin 13 for PWM functionality with the corresponding functions set to 4.
+   이 줄은 두 개의 채널에서 PWM을 활성화합니다. 핀 12와 핀 13을 PWM 기능으로 설정하며, 각 핀의 기능 번호를 4로 설정합니다.
+
+Raspberry Pi의 GPIO 12번과 13번 핀을 **PWM 출력 핀으로 설정**하여 하드웨어 기반의 PWM 신호를 제어할 수 있도록 해줍니다. 이를 통해 Raspberry Pi는 부팅 시 해당 핀들을 PWM 모드로 자동 설정하며, 이를 이용한 제어가 가능해집니다.
+
+### 2. Device Tree Overlay (DTO)란?
+**Device Tree Overlay**는 기존의 Device Tree 설정을 수정하거나 추가적으로 기능을 활성화할 때 사용됩니다. 
+기본 Device Tree는 Raspberry Pi의 하드웨어에 대한 정보를 포함하고 있지만, 모든 기능이 항상 활성화되어 있는 것은 아닙니다. 
+사용자가 특정 기능(GPIO, I2C, SPI, PWM 등)을 활성화하거나 설정을 변경하려면 **Device Tree Overlay**를 통해 설정을 추가할 수 있습니다.
+
+### 3. `dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4`의 의미
+
+이 설정은 Raspberry Pi의 GPIO 핀 12와 13에서 **PWM 기능**을 활성화하고, 각 핀의 기능을 설정하는 Device Tree Overlay입니다. 각 파라미터는 다음을 의미합니다:
+
+- **`dtoverlay=pwm-2chan`**: 두 개의 PWM 채널을 활성화하는 오버레이를 의미합니다. Raspberry Pi에는 두 개의 하드웨어 PWM 채널이 존재하며, 각각을 사용할 수 있습니다. 이 옵션을 통해 두 개의 PWM 채널이 활성화됩니다.
+  
+- **`pin=12`**: PWM 기능이 GPIO 핀 12번에서 작동하도록 설정합니다.
+  
+- **`func=4`**: GPIO 핀 12번의 **기능 번호**를 4로 설정합니다. Raspberry Pi의 각 GPIO 핀은 여러 기능을 가질 수 있으며, 기능 번호에 따라 해당 핀이 어떤 기능을 수행할지 결정됩니다. **4번 기능**은 해당 핀이 **PWM 출력을 담당**하도록 설정합니다.
+  
+- **`pin2=13`**: GPIO 핀 13번에서도 PWM 기능을 활성화하도록 설정합니다.
+
+- **`func2=4`**: GPIO 핀 13번의 기능 번호를 4로 설정하여 이 핀에서도 PWM 출력을 할 수 있도록 설정합니다.
 
 
-```
-# Place "config.txt" changes (dtparam, dtoverlay, disable_overscan, etc.) in
-# this file. Please refer to the README file for a description of the various
-# configuration files on the boot partition.
-
-dtoverlay=spi1-1cs,cs0_spidev=disabled
-dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
-```
-
-Ensure you save the `config.txt` file after making these changes and reboot your system for the changes to take effect.
+`dtoverlay`는 시스템이 부팅될 때 적용되며, 필요한 하드웨어 기능을 활성화하거나 구성하는 데 사용됩니다. Raspberry Pi는 다양한 GPIO 핀들이 다중 기능을 가지고 있기 때문에 기본적으로 모든 기능이 활성화되어 있지 않습니다. PWM, SPI, I2C 같은 기능들은 필요할 때 오버레이를 통해 활성화해야 하며, 이를 통해 자원을 효율적으로 관리할 수 있습니다. `dtoverlay=pwm-2chan` 설정을 통해 시스템 부팅 시 PWM이 필요한 핀에 대해 자동으로 활성화되며, 이후부터는 소프트웨어를 통해 해당 핀에 PWM 신호를 제어할 수 있습니다.
 
 ---
 # Demo
@@ -30,66 +42,64 @@ https://github.com/dlgus8648/Linux_device_driver/assets/139437162/87a13d17-dc89-
 
 
 
+## 개요
 
+이 문서는 PWM 드라이버를 사용하여 디바이스 파일에 문자를 작성함으로써 PWM 신호의 듀티 사이클을 조정하는 방법을 설명합니다. 각 문자는 ASCII 값에 기반하여 특정 듀티 사이클 백분율에 대응됩니다.
 
-## Overview
+## 사용법
 
-This document explains how to use the PWM driver to adjust the duty cycle of a PWM signal by writing characters to a device file. Each character corresponds to a specific duty cycle percentage based on its ASCII value.
+다음 예시는 `echo` 명령을 사용하여 PWM 드라이버의 디바이스 파일(`/dev/my_pwm_driver`)에 문자를 작성하고 PWM 듀티 사이클을 설정하는 방법을 보여줍니다.
 
-## Usage
+### 예시 명령어
 
-The following examples demonstrate how to use the `echo` command to write characters to the PWM driver device file (`/dev/my_pwm_driver`) and set the PWM duty cycle.
-
-### Example Commands
-
-1. **Set Duty Cycle to 0%**
+1. **듀티 사이클을 0%로 설정**
    ```bash
    $ echo a > /dev/my_pwm_driver
    ```
-   - The character `'a'` is written to the device file.
-   - The `driver_write` function is called, receiving the character `'a'`.
-   - The character `'a'` is converted to its ASCII value and calculated as `'a' - 'a' = 0`.
-   - The PWM on-time is set to `100000000 * 0 = 0`.
-   - The PWM duty cycle is set to 0%.
+   - 문자 `'a'`가 디바이스 파일에 작성됩니다.
+   - `driver_write` 함수가 호출되며, 문자인 `'a'`를 받습니다.
+   - 문자 `'a'`는 ASCII 값으로 변환되고, `'a' - 'a' = 0`으로 계산됩니다.
+   - PWM 온타임은 `100000000 * 0 = 0`으로 설정됩니다.
+   - PWM 듀티 사이클은 0%로 설정됩니다.
 
-2. **Set Duty Cycle to 90%**
+2. **듀티 사이클을 90%로 설정**
    ```bash
    $ echo j > /dev/my_pwm_driver
    ```
-   - The character `'j'` is written to the device file.
-   - The `driver_write` function is called, receiving the character `'j'`.
-   - The character `'j'` is converted to its ASCII value and calculated as `'j' - 'a' = 9`.
-   - The PWM on-time is set to `100000000 * 9 = 900000000`.
-   - The PWM duty cycle is set to 90%.
+   - 문자 `'j'`가 디바이스 파일에 작성됩니다.
+   - `driver_write` 함수가 호출되며, 문자인 `'j'`를 받습니다.
+   - 문자 `'j'`는 ASCII 값으로 변환되고, `'j' - 'a' = 9`로 계산됩니다.
+   - PWM 온타임은 `100000000 * 9 = 900000000`으로 설정됩니다.
+   - PWM 듀티 사이클은 90%로 설정됩니다.
 
-3. **Set Duty Cycle to 40%**
+3. **듀티 사이클을 40%로 설정**
    ```bash
    $ echo e > /dev/my_pwm_driver
    ```
-   - The character `'e'` is written to the device file.
-   - The `driver_write` function is called, receiving the character `'e'`.
-   - The character `'e'` is converted to its ASCII value and calculated as `'e' - 'a' = 4`.
-   - The PWM on-time is set to `100000000 * 4 = 400000000`.
-   - The PWM duty cycle is set to 40%.
+   - 문자 `'e'`가 디바이스 파일에 작성됩니다.
+   - `driver_write` 함수가 호출되며, 문자인 `'e'`를 받습니다.
+   - 문자 `'e'`는 ASCII 값으로 변환되고, `'e' - 'a' = 4`로 계산됩니다.
+   - PWM 온타임은 `100000000 * 4 = 400000000`으로 설정됩니다.
+   - PWM 듀티 사이클은 40%로 설정됩니다.
 
-4. **Reset Duty Cycle to 0%**
+4. **듀티 사이클을 다시 0%로 리셋**
    ```bash
    $ echo a > /dev/my_pwm_driver
    ```
-   - The character `'a'` is written to the device file.
-   - The `driver_write` function is called, receiving the character `'a'`.
-   - The character `'a'` is converted to its ASCII value and calculated as `'a' - 'a' = 0`.
-   - The PWM on-time is set to `100000000 * 0 = 0`.
-   - The PWM duty cycle is reset to 0%.
+   - 문자 `'a'`가 디바이스 파일에 작성됩니다.
+   - `driver_write` 함수가 호출되며, 문자인 `'a'`를 받습니다.
+   - 문자 `'a'`는 ASCII 값으로 변환되고, `'a' - 'a' = 0`으로 계산됩니다.
+   - PWM 온타임은 `100000000 * 0 = 0`으로 설정됩니다.
+   - PWM 듀티 사이클은 다시 0%로 리셋됩니다.
 
-## Summary
+## 요약
 
-Each command sets the PWM duty cycle based on the character written to the device file. The following table summarizes the duty cycle settings:
+각 명령어는 디바이스 파일에 작성된 문자에 따라 PWM 듀티 사이클을 설정합니다. 다음 표는 듀티 사이클 설정을 요약한 것입니다:
 
-| Character | Duty Cycle |
-|-----------|-------------|
-| `'a'`     | 0%          |
-| `'j'`     | 90%         |
-| `'e'`     | 40%         |
+| 문자       | 듀티 사이클  |
+|------------|---------------|
+| `'a'`      | 0%            |
+| `'j'`      | 90%           |
+| `'e'`      | 40%           |
 
-By using this method, users can easily adjust the PWM signal's duty cycle.
+이 방법을 사용하면 사용자는 PWM 신호의 듀티 사이클을 쉽게 조정할 수 있습니다.
