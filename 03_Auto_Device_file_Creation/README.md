@@ -35,8 +35,9 @@ int alloc_chrdev_region(dev_t *dev, unsigned baseminor, unsigned count, const ch
    ```
 
 ### 3. `cdev()`
-`cdev`는 캐릭터 디바이스를 커널에 등록하고 관리하기 위한 구조체입니다.
-캐릭터 디바이스는 일반적으로 `struct cdev` 구조체로 정의되며, `cdev_init()` 및 `cdev_add()` 함수로 커널에 등록됩니다.
+`cdev`는 캐릭터 디바이스를 커널에 등록하고 관리하기 새로운 방법입니다.
+고전적 방법으로는 문자 디바이스를 등록할 때는 register_chrdev() 함수를 사용하여 장치를 등록하고, unregister_chrdev() 함수를 사용하여 해제했습니다. /  
+최근 캐릭터 디바이스는 일반적으로 `struct cdev` 구조체로 정의되며, `cdev_init()` 및 `cdev_add()` 함수로 커널에 등록됩니다.
 - `cdev` 구조체는 캐릭터 디바이스의 주요 데이터를 포함하고, 파일 연산자(파일 오퍼레이션 함수)를 정의하며, 장치 드라이버가 파일 시스템에 통합되도록 합니다.
 
 #### 주요 함수:
