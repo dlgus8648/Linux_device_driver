@@ -160,7 +160,6 @@ s32 read_temperature(void) {
 	var2 = (((((raw_temp >> 4) - (dig_T1)) * ((raw_temp >> 4) - (dig_T1))) >> 12) * (dig_T3)) >> 14;
 	return ((var1 + var2) *5 +128) >> 8;
 }
-
 ```
 
 
@@ -170,4 +169,8 @@ s32 read_temperature(void) {
 
 ![i2c_3](https://github.com/user-attachments/assets/38bb4fe6-41df-441b-a4d7-e9fa123d77e5)
 
-```
+![i2c_2](https://github.com/user-attachments/assets/3e7157ef-54ab-444f-ad64-8bf50172c93e)
+![i2c_11](https://github.com/user-attachments/assets/c0ac73e6-dc6a-4847-8d2c-4b75b4f72344)
+![i2c_22](https://github.com/user-attachments/assets/92350279-6a36-455e-8e7c-6f4a4163ee29)
+![i2c_메모리맵](https://github.com/user-attachments/assets/036507ef-8697-48b7-b22a-10b3a91c1049)
+
