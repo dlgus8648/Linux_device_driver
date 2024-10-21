@@ -23,9 +23,9 @@
 |[9. High Resolution Timer in a Linux Kerenel Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/09_High_Resolution_Timer)|- hrtimer|
 |[10. Parameters for a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/10_Parameters_for_LKM)|- module_param()|
 |[11. IOCTL in a Linux kerenl module](https://github.com/dlgus8648/Linux_device_driver/tree/main/11_IOCTL_in_LKM)|---|
-|[12. Treads in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/12_Threads_in_LKM)|-kthread()<br>- kernel_thread()|
-|[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|---|
-|[14. The Poll Callback in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/14_The_Poll_Callback_in_LKM)|---|
+|[12. Treads in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/12_Threads_in_LKM)|- kthread()<br>- kernel_thread()|
+|[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|HW-인터럽트|
+|[14. The Poll Callback in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/14_The_Poll_Callback_in_LKM)|HW-폴링|
 |[15. Waitqueues in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/15_Waitqueues_in_LKM)|- 프로세스<br>- 스케줄링|
 |[16_Mutex](https://github.com/dlgus8648/Linux_device_driver/tree/main/16_Mutex)|-mutex<br>- sempahore<br>- spinlock<br>- seqlock|
 |[17_Misc](https://github.com/dlgus8648/Linux_device_driver/tree/main/17_Misc)|---|
