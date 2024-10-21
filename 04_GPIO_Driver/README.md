@@ -1,4 +1,4 @@
-# GPIO 디바이스 드라이버 /sys/class/gpio 제어 실습 
+# GPIO 디바이스 드라이버 제어 실습 
 
 ### GPIO Control using /sys/class/gpio:
 ![2](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/0735da6a-5d7b-4eaa-af89-a3887d92b024)
