@@ -1,87 +1,8 @@
 
 # GPIO IRQ Signal Project
+이 프로젝트는 Linux 환경에서 GPIO(범용 입출력) 인터럽트를 처리하는 방법을 보여줍니다. 프로젝트는 사용자 공간 애플리케이션과 커널 모듈을 포함하며, 이들이 상호 작용하여 GPIO 신호를 처리합니다.
 
-This project demonstrates how to handle GPIO (General Purpose Input/Output) interrupts in a Linux environment. The project includes a userspace application and a kernel module that interact to handle GPIO signals.
-
-## Project Structure
-
-- `gpio_irq_signal.c`: Kernel module source code that handles GPIO interrupts.
-- `testapp.c`: Userspace application that waits for signals from the kernel module.
-- `Makefile`: Makefile to compile the kernel module and the userspace application.
-- `README.md`: This file.
-
-## Requirements
-
-- Linux operating system
-- GCC compiler
-- Root privileges to load the kernel module and run the userspace application
-
-## Installation and Usage
-
-1. **Compile the Kernel Module and Userspace Application:**
-
-   ```sh
-   make
-   ```
-
-2. **Load the Kernel Module:**
-
-   ```sh
-   sudo insmod gpio_irq_signal.ko
-   ```
-
-3. **Run the Userspace Application:**
-
-   ```sh
-   sudo ./a.out
-   ```
-
-   You should see the following output indicating that the application is waiting for signals:
-
-   ```
-   PID: 2772
-   Wait for signal...
-   ```
-
-![제목 없음](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/6750ff92-a56f-4cc8-8d66-589ba41056fe)
-
-
-4. **Trigger the GPIO Interrupt:**
-
-   Press the button or perform the action that triggers the GPIO interrupt. You should see messages indicating that the button was pressed:
-
-   ```
-   Button was pressed!
-   Button was pressed!
-   ```
-
-5. **Check Kernel Messages:**
-
-   You can check the kernel messages using the `dmesg` command to verify that the interrupt service routine (ISR) was called:
-```markdown
-   ```sh
-   dmesg | tail
-   ```
-
-   Expected output:
-
-   ```
-   [  765.505581] gpio_irq_signal: Userspace app with PID 2772 is registered
-   [  786.404864] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  787.684285] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  788.303539] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  788.779267] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  789.318061] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  790.553854] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  791.454770] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  791.454826] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   [  791.902612] gpio_irq_signal: Interrupt was triggered and ISR was called!
-   ```
-
-## DEMO
-
-
-https://github.com/dlgus8648/Linux_device_driver/assets/139437162/5c52e975-90ac-4c9c-8d7a-b2a39074cebc
+## 코드 구현 방법
 
 ## B. 함수 호출 순서
 
@@ -158,4 +79,68 @@ https://github.com/dlgus8648/Linux_device_driver/assets/139437162/5c52e975-90ac-
    - `free_irq()` → `gpio_free()` → `unregister_chrdev()`
 
 이 순서는 GPIO 17 핀에서 발생하는 인터럽트를 처리하고, 해당 이벤트를 사용자 공간 애플리케이션에 신호로 알리는 과정을 설명합니다.
+
+
+## Demo
+
+1. **커널 모듈 및 사용자 공간 애플리케이션 컴파일:**
+
+   ```sh
+   make
+   ```
+
+2. **커널 모듈 로드:**
+
+   ```sh
+   sudo insmod gpio_irq_signal.ko
+   ```
+
+3. **사용자 공간 애플리케이션 실행:**
+
+   ```sh
+   sudo ./a.out
+   ```
+
+   다음과 같은 출력이 표시되며 애플리케이션이 신호를 기다리고 있음을 확인할 수 있습니다:
+
+   ```
+   PID: 2772
+   Wait for signal...
+   ```
+
+![제목 없음](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/6750ff92-a56f-4cc8-8d66-589ba41056fe)
+
+4. **GPIO 인터럽트 트리거:**
+
+   버튼을 누르거나 GPIO 인터럽트를 트리거하는 동작을 수행합니다. 버튼이 눌렸다는 메시지가 표시될 것입니다:
+
+   ```
+   Button was pressed!
+   Button was pressed!
+   ```
+
+5. **커널 메시지 확인:**
+
+   `dmesg` 명령어를 사용하여 인터럽트 서비스 루틴(ISR)이 호출되었는지 확인할 수 있습니다:
+   ```sh
+   dmesg | tail
+   ```
+
+   예상 출력:
+
+   ```
+   [  765.505581] gpio_irq_signal: Userspace app with PID 2772 is registered
+   [  786.404864] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  787.684285] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  788.303539] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  788.779267] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  789.318061] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  790.553854] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  791.454770] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  791.454826] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   [  791.902612] gpio_irq_signal: Interrupt was triggered and ISR was called!
+   ```
+
+
+https://github.com/dlgus8648/Linux_device_driver/assets/139437162/5c52e975-90ac-4c9c-8d7a-b2a39074cebc
 
