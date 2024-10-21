@@ -3,20 +3,20 @@
 
 # 02_01 Insmod
 ![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/a628118c-a8d1-4553-a622-28000e6cf2ee)
+## 설명
+"Device Numbers" 모듈은 문자 디바이스를 등록하고 주요 장치 번호(major device number)를 할당하는 리눅스 커널 모듈입니다. 
+이 예제는 커널에서 디바이스 번호를 다루는 방법을 실습합니다.
 
-## Description
-The "Device Numbers" module is a Linux kernel module that registers a character device and assigns it a major device number. This example demonstrates how to work with device numbers in the kernel.
-
-## Commands Executed
-The following commands were used to insert the module and verify its registration:
+## 실행된 명령어
+다음 명령어는 모듈을 삽입하고 등록 상태를 확인하는 데 사용되었습니다:
 
 1. `sudo insmod dev_nr.ko`
-   - Inserts the kernel module into the kernel.
+   - 커널 모듈을 커널에 삽입합니다.
 2. `cat /proc/devices | grep my_dev_nr`
-   - Displays the list of registered devices and filters the output to show the entry for `my_dev_nr`.
+   - 등록된 장치 목록을 표시하고, `my_dev_nr` 항목을 보여주도록 필터링합니다.
 
-## Kernel Log Messages and /proc/devices Output
-Below is the explanation of the kernel log messages and the `/proc/devices` output:
+## 커널 로그 메시지 및 /proc/devices 출력
+아래는 커널 로그 메시지와 `/proc/devices` 출력에 대한 설명입니다:
 
 ```
 kim@kimrihyeon:~/Linux_device_driver/02_Device_Numbers$ sudo insmod dev_nr.ko
@@ -24,22 +24,21 @@ kim@kimrihyeon:~/Linux_device_driver/02_Device_Numbers$ cat /proc/devices | grep
  64 my_dev_nr
 ```
 
-### Detailed Explanation
+### 상세 설명
 1. `sudo insmod dev_nr.ko`
-   - This command inserts the kernel module `dev_nr.ko` into the kernel. The module's initialization function is executed, which registers a character device with a specific major device number.
+   - 이 명령은 커널 모듈 `dev_nr.ko`를 커널에 삽입합니다. 모듈의 초기화 함수가 실행되어, 특정 주요 장치 번호와 함께 문자 디바이스가 등록됩니다.
    
 2. `cat /proc/devices | grep my_dev_nr`
-   - The `/proc/devices` file contains a list of all registered character and block devices in the system, along with their major device numbers. By using `grep my_dev_nr`, we filter the list to find the entry for our device.
+   - `/proc/devices` 파일은 시스템에 등록된 모든 문자 및 블록 디바이스 목록과 그들의 주요 장치 번호를 포함합니다. `grep my_dev_nr` 명령어를 사용하여, 해당 디바이스의 항목을 필터링하여 찾습니다.
 
-### Output Explanation
+### 출력 설명
 - `64 my_dev_nr`
-  - This line indicates that the device named `my_dev_nr` has been successfully registered with the major device number `64`. The major number uniquely identifies the device driver associated with `my_dev_nr`.
+  - 이 줄은 `my_dev_nr`라는 이름의 디바이스가 주요 장치 번호 `64`로 성공적으로 등록되었음을 나타냅니다. 주요 번호는 `my_dev_nr`와 연결된 디바이스 드라이버를 고유하게 식별합니다.
 
+## 결론
+위의 단계와 출력은 "Device Numbers" 커널 모듈이 올바르게 작동함을 확인해 줍니다. 이 모듈은 `my_dev_nr`라는 문자 디바이스를 주요 장치 번호 `64`와 함께 성공적으로 등록했으며, 이 등록은 `/proc/devices` 파일을 통해 확인할 수 있습니다.
 
-## Conclusion
-The above steps and outputs confirm the correct functionality of the "Device Numbers" kernel module. The module successfully registers a character device named `my_dev_nr` with the major device number `64`, and this registration can be verified by examining the `/proc/devices` file.
-
-This exercise helps in understanding how to manage device numbers in Linux kernel modules, providing a foundation for creating and handling custom devices.
+이 실습은 리눅스 커널 모듈에서 디바이스 번호를 관리하는 방법을 이해하는 데 도움이 되며, 사용자 정의 장치를 만들고 다루는 데 필요한 기초를 제공합니다.
 
 ---
 
