@@ -51,7 +51,7 @@ request_irq(irq_number, (irq_handler_t) gpio_irq_handler, IRQF_TRIGGER_RISING, "
 ![KakaoTalk_20240624_215329403](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/617c033a-bc28-46ef-bd37-fad01656409f)
 ![3](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/5e069529-ccdb-4bad-ba0d-db29fcfaee02)
 
-# /proc/interrupts
+# 인터럽트 서비스 루틴 확인(/proc/interrupts)
 ![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/756ae583-f42a-4997-9c82-31502db935f9)
 
 이 코드는 GPIO 17번 핀에 대한 인터럽트를 설정하는 Linux 커널 모듈입니다. GPIO 핀에 신호 변화가 발생하면 인터럽트가 발생하며, 해당 인터럽트 서비스 루틴(ISR)이 호출됩니다. 함수 호출 순서는 다음과 같습니다.
