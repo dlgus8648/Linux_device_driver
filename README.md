@@ -31,7 +31,7 @@
 |[17_Misc](https://github.com/dlgus8648/Linux_device_driver/tree/main/17_Misc)|---|
 |[18_dt_probe](https://github.com/dlgus8648/Linux_device_driver/tree/main/18_dt_probe)|-Device tree<br>probe()<br>platform_driver()|
 |[19_DMA](https://github.com/dlgus8648/Linux_device_driver/tree/main/19_DMA)|-Completion<br>- DMA|
-|[20_Kobject](https://github.com/dlgus8648/Linux_device_driver/tree/main/20_Kobject)|-sysfs<br>- 참조카운트<br>kset|
+|[20_Kobject](https://github.com/dlgus8648/Linux_device_driver/tree/main/20_Kobject)|- sysfs<br>- 참조카운트<br>- kset|
 
 
 ---
