@@ -27,9 +27,9 @@
 |[13. Sending a signal from Kerenl to Userspace](https://github.com/dlgus8648/Linux_device_driver/tree/main/13_Sending_Signals)|HW-인터럽트|
 |[14. The Poll Callback in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/14_The_Poll_Callback_in_LKM)|HW-폴링|
 |[15. Waitqueues in a Linux Kerenl Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/15_Waitqueues_in_LKM)|- 블록킹<br>- 스케줄링|
-|[16_Mutex](https://github.com/dlgus8648/Linux_device_driver/tree/main/16_Mutex)|-mutex<br>- sempahore<br>- spinlock<br>- seqlock|
+|[16_Mutex](https://github.com/dlgus8648/Linux_device_driver/tree/main/16_Mutex)|- mutex<br>- sempahore<br>- spinlock<br>- seqlock|
 |[17_Misc](https://github.com/dlgus8648/Linux_device_driver/tree/main/17_Misc)|---|
-|[18_dt_probe](https://github.com/dlgus8648/Linux_device_driver/tree/main/18_dt_probe)|-Device tree<br>probe()<br>platform_driver()|
+|[18_dt_probe](https://github.com/dlgus8648/Linux_device_driver/tree/main/18_dt_probe)|- Device tree<br>- probe()<br>- platform_driver()|
 |[19_DMA](https://github.com/dlgus8648/Linux_device_driver/tree/main/19_DMA)|-Completion<br>- DMA|
 |[20_Kobject](https://github.com/dlgus8648/Linux_device_driver/tree/main/20_Kobject)|- sysfs<br>- 참조카운트<br>- kset|
 
