@@ -119,18 +119,172 @@ my_device {
 - **platform_driver 구조체**: 해당 구조체는 플랫폼 장치와 연동되는 드라이버를 정의하며, **장치의 초기화**, **자원 할당**, **드라이버 제거** 등의 작업을 수행하는 콜백 함수들을 포함합니다.
 
 
+이 코드는 **Linux 커널**에서 **platform driver**와 **device tree**를 이용하여 특정 장치의 속성을 읽어오는 **플랫폼 드라이버**입니다. **platform_driver()**와 관련된 코드가 어떻게 쓰였는지 자세히 설명하겠습니다.
+
+---
+
+### 1. **platform_driver와 관련된 개념**
+
+- **Platform Driver**는 **버스(bus)**가 없는 장치를 처리하기 위한 드라이버로, 주로 **SoC**나 **임베디드 시스템**에서 CPU와 연결된 장치들을 관리합니다.
+- 이 코드는 **Device Tree**를 통해 하드웨어 장치가 정의되고, 해당 장치에 맞는 드라이버가 동적으로 연결되는 구조입니다. 이 드라이버는 `probe()`와 `remove()` 함수를 통해 장치를 초기화하고, 제거할 때 관련된 작업을 처리합니다.
+
+---
+
+### 2. **platform_driver 구조체 정의**
+
+```c
+static struct platform_driver my_driver = {
+	.probe = dt_probe,
+	.remove = dt_remove,
+	.driver = {
+		.name = "my_device_driver",
+		.of_match_table = my_driver_ids,
+	},
+};
+```
+
+이 부분은 **platform_driver 구조체**를 정의하는 코드입니다. 플랫폼 드라이버는 주로 다음과 같은 속성들을 정의합니다.
+
+- **probe = dt_probe**: 이 드라이버가 해당 장치와 **연결될 때 호출**되는 함수입니다. 장치가 발견되면 커널은 `probe()` 함수를 호출하여 장치를 초기화합니다.
+  
+- **remove = dt_remove**: 장치가 시스템에서 제거되거나 드라이버가 언로드 될 때 호출되는 함수입니다. 이 함수는 장치와 관련된 자원을 정리하는 역할을 합니다.
+
+- **driver = {...}**: `platform_driver` 구조체 안에 있는 **driver 구조체**는 드라이버와 관련된 정보를 담고 있습니다.
+  - **name = "my_device_driver"**: 이 드라이버의 이름을 정의합니다. 커널 내에서 이 이름으로 드라이버를 구분하게 됩니다.
+  - **of_match_table = my_driver_ids**: 이 드라이버가 **어떤 장치와 호환**되는지를 나타내는 **Device Tree**와의 매칭 정보입니다. `my_driver_ids` 배열에서 호환성을 정의합니다.
+
+---
+
+### 3. **Device Tree와 호환성 매칭 (of_device_id 구조체)**
+
+```c
+static struct of_device_id my_driver_ids[] = {
+	{
+		.compatible = "brightlight,mydev",
+	}, { /* sentinel */ }
+};
+MODULE_DEVICE_TABLE(of, my_driver_ids);
+```
+
+- **of_device_id 구조체**는 **Device Tree**에서 이 드라이버가 어떤 장치와 **호환되는지**를 정의하는 테이블입니다.
+  - `"compatible = "brightlight,mydev"`는 이 드라이버가 Device Tree에서 **"brightlight,mydev"**라는 호환성을 가진 장치에 연결됨을 의미합니다. 즉, Device Tree 파일에서 `"compatible = "brightlight,mydev"`로 정의된 장치가 발견되면 커널이 이 드라이버의 `probe()` 함수를 호출하게 됩니다.
+  
+- **MODULE_DEVICE_TABLE(of, my_driver_ids)**: 이 매크로는 커널 모듈이 지원하는 **Device Tree**의 호환성 정보를 정의하며, 해당 드라이버가 어떤 장치들과 연결될 수 있는지를 나타냅니다. 이를 통해 **u-boot**나 **커널 모듈 로더**가 모듈을 자동으로 적절한 장치에 매핑할 수 있게 합니다.
+
+---
+
+### 4. **Probe 함수: 장치와의 연결 및 초기화**
+
+```c
+static int dt_probe(struct platform_device *pdev) {
+	struct device *dev = &pdev->dev;
+	const char *label;
+	int my_value, ret;
+
+	printk("dt_probe - Now I am in the probe function!\n");
+
+	/* Check for device properties */
+	if(!device_property_present(dev, "label")) {
+		printk("dt_probe - Error! Device property 'label' not found!\n");
+		return -1;
+	}
+	if(!device_property_present(dev, "my_value")) {
+		printk("dt_probe - Error! Device property 'my_value' not found!\n");
+		return -1;
+	}
+
+	/* Read device properties */
+	ret = device_property_read_string(dev, "label", &label);
+	if(ret) {
+		printk("dt_probe - Error! Could not read 'label'\n");
+		return -1;
+	}
+	printk("dt_probe - label: %s\n", label);
+	ret = device_property_read_u32(dev, "my_value", &my_value);
+	if(ret) {
+		printk("dt_probe - Error! Could not read 'my_value'\n");
+		return -1;
+	}
+	printk("dt_probe - my_value: %d\n", my_value);
+
+	return 0;
+}
+```
+
+- **dt_probe()**는 이 플랫폼 드라이버에서 **가장 중요한 함수**로, 커널이 장치를 발견하고 이 드라이버를 연결할 때 호출됩니다.
+  
+- **pdev**는 `struct platform_device` 타입으로, 커널이 플랫폼 장치를 드라이버에 전달할 때 사용하는 구조체입니다. 여기서 장치와 관련된 정보를 사용하게 됩니다.
+
+#### 주요 동작
+
+1. **장치 속성 확인**:
+   - `device_property_present()`를 사용하여 장치가 정의한 속성 `"label"`과 `"my_value"`가 **존재하는지 확인**합니다. 만약 이 속성이 Device Tree에서 정의되지 않았다면 에러 메시지를 출력하고 함수를 종료합니다.
+   
+2. **장치 속성 읽기**:
+   - `device_property_read_string()`와 `device_property_read_u32()`를 사용하여 **Device Tree에 정의된 값들을 읽어옵니다**. `"label"`은 문자열 속성이며, `"my_value"`는 32비트 정수형 속성입니다. 만약 속성 읽기에 실패하면 에러 메시지를 출력하고 함수가 종료됩니다.
+   
+3. **장치 속성 출력**:
+   - 읽어온 `"label"` 값과 `"my_value"` 값을 커널 로그에 출력합니다. 이는 디버깅을 돕기 위한 출력이며, 성공적으로 속성을 읽어왔음을 의미합니다.
+
+---
+
+### 5. **Remove 함수: 장치 제거 시 호출**
+
+```c
+static int dt_remove(struct platform_device *pdev) {
+	printk("dt_probe - Now I am in the remove function\n");
+	return 0;
+}
+```
+
+- **dt_remove()**는 커널에서 장치가 **제거되거나 드라이버가 언로드**될 때 호출되는 함수입니다. 이 함수에서는 주로 장치와 관련된 자원 해제나 정리 작업을 수행합니다.
+- 이 코드에서는 간단히 **로그 출력**만을 수행하며, 추가적인 자원 해제는 하지 않습니다.
+
+---
+
+### 6. **드라이버 등록 및 해제**
+
+#### 1) **platform_driver_register()**
+
+```c
+static int __init my_init(void) {
+	printk("dt_probe - Loading the driver...\n");
+	if(platform_driver_register(&my_driver)) {
+		printk("dt_probe - Error! Could not load driver\n");
+		return -1;
+	}
+	return 0;
+}
+```
+
+- `my_init()` 함수는 커널 모듈이 **로드될 때 호출**되는 함수입니다.
+- `platform_driver_register()`는 이 드라이버를 커널에 **등록**하는 역할을 하며, 등록에 성공하면 커널은 장치 트리를 탐색하여 해당 장치와 **호환되는 장치**가 있을 경우 `probe()` 함수를 호출합니다.
+- 만약 등록에 실패하면 에러 메시지를 출력하고, -1을 반환하여 모듈 로드를 실패로 처리합니다.
+
+#### 2) **platform_driver_unregister()**
+
+```c
+static void __exit my_exit(void) {
+	printk("dt_probe - Unload driver");
+	platform_driver_unregister(&my_driver);
+}
+```
+
+- `my_exit()` 함수는 모듈이 **언로드될 때 호출**됩니다.
+- `platform_driver_unregister()`는 커널에서 **드라이버를 제거**하는 역할을 합니다. 이 과정에서 드라이버는 더 이상 장치와 연결되지 않으며, 시스템에서 완전히 해제됩니다.
+
+---
 
 
 
-## A. Demo
+## B. Demo
 ![dt_probe](https://github.com/user-attachments/assets/7c04872f-83d5-4622-845b-1bc227e85e29)
 ![dt_probe2](https://github.com/user-attachments/assets/846eaa94-59ef-464e-8041-9d8ea239f9ef)
 ![dt_probe3](https://github.com/user-attachments/assets/4c6de300-00e4-46a2-a61b-5082dd37db3f)
 
 
 
-## B. 함수 호출 순서
-
+## C. 코드 구현 방법
 이 코드는 플랫폼 드라이버가 로드될 때 장치 트리(Device Tree)에서 특정 장치 및 해당 속성을 파싱하여 처리하는 Linux 커널 모듈입니다. 함수 호출 순서는 다음과 같습니다.
 
 ### 1. 모듈 로드 시 (`my_init` 호출)
