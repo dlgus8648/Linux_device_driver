@@ -6,60 +6,26 @@
 디바이스 파일을 사용하여 사용자는 하드웨어 장치에 접근할 수 있습니다.
 
 
-### 2. 디바이스 파일 생성 방법
-디바이스 파일은 보통 `/dev` 디렉토리에 위치하며, 이 실습에서는 2가지 방법으로 디바이스 파일을 생성하는 실습을 진행했습니다.
-- 드라이버 코드에서 디바이스 파일을 생성하는 방법 `register_chrdev()`
-- 사용자 터미널에서 디바이스 파일을 생성하는 방법 `mknod 명령어`
+### 2. 디바이스 파일 생성 및 드라이버 등록
+### 1. `register_chrdev`
+`register_chrdev`는 커널에 문자 디바이스 드라이버를 등록하는 함수입니다. 
+문자 디바이스는 `/dev` 디렉토리에서 특정 파일로 나타나며, 사용자 공간의 프로그램이 이를 통해 디바이스와 상호작용할 수 있습니다.
 
-디바이스 파일은 주번호와 부번호로 특정됩니다. 이를 통해 커널은 주번호를 통해 해당 디바이스 파일이 어떤 드라이버가 그 파일을 처리해야 하는지 알아냅니다. 
-일반적으로 리눅스 커널에는 이미 여러 주번호가 예약되어 있으며, 주요 하드웨어 장치나 가상 장치에 할당되어 있습니다.
-사용자는 자신이 작성한 드라이버에 고유한 주번호를 할당하거나, 커널에 의해 자동 할당(실습3_Auto_Device_file_Creation)되도록 할 수 있습니다.
-
-
-
-# 실습 : 02_01 디바이스 파일 생성방법(register_chrdev())
-![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/a628118c-a8d1-4553-a622-28000e6cf2ee)
-## 설명
-"Device Numbers" 모듈은 문자 디바이스를 등록하고 주요 장치 번호(major device number)를 할당하는 리눅스 커널 모듈입니다. 
-이 예제는 커널에서 디바이스 번호를 다루는 방법을 실습합니다.
-``retval = register_chrdev(MYMAJOR, "my_dev_nr", &fops);``로 MYMAJOR번호를 64로 지정하고 my_dev_nr이라는 디바이스파일을 생성합니다.
-
-## 실행된 명령어
-다음 명령어는 모듈을 삽입하고 등록 상태를 확인하는 데 사용되었습니다:
-
-1. `sudo insmod dev_nr.ko`
-   - 커널 모듈을 커널에 삽입합니다.
-2. `cat /proc/devices | grep my_dev_nr`
-   - 등록된 장치 목록을 표시하고, `my_dev_nr` 항목을 보여주도록 필터링합니다.
-
-## 커널 로그 메시지 및 /proc/devices 출력
-아래는 커널 로그 메시지와 `/proc/devices` 출력에 대한 설명입니다:
-
+**사용 예시**:
+```c
+register_chrdev(240, "my_device", &fops);
 ```
-kim@kimrihyeon:~/Linux_device_driver/02_Device_Numbers$ sudo insmod dev_nr.ko
-kim@kimrihyeon:~/Linux_device_driver/02_Device_Numbers$ cat /proc/devices | grep my_dev_nr
- 64 my_dev_nr
-```
+여기서 메이저 번호 240의 문자 디바이스를 등록하고, `fops`를 통해 그 디바이스의 연산 방식을 정의합니다.
 
-### 상세 설명
-1. `sudo insmod dev_nr.ko`
-   - 이 명령은 커널 모듈 `dev_nr.ko`를 커널에 삽입합니다. 모듈의 초기화 함수가 실행되어, 특정 주요 장치 번호와 함께 문자 디바이스가 등록됩니다.
-   
-2. `cat /proc/devices | grep my_dev_nr`
-   - `/proc/devices` 파일은 시스템에 등록된 모든 문자 및 블록 디바이스 목록과 그들의 주요 장치 번호를 포함합니다. `grep my_dev_nr` 명령어를 사용하여, 해당 디바이스의 항목을 필터링하여 찾습니다.
+### 2. `device_create`
+`device_create`는 `register_chrdev`로 등록된 문자 디바이스에 실제로 `/dev` 디렉토리에 디바이스 파일을 생성하는 역할을 합니다. 이 함수는 일반적으로 `class_create`와 함께 사용되어, 디바이스 클래스를 생성하고 그 클래스에 속하는 디바이스를 만듭니다.
 
-### 출력 설명
-- `64 my_dev_nr`
-  - 이 줄은 `my_dev_nr`라는 이름의 디바이스가 주요 장치 번호 `64`로 성공적으로 등록되었음을 나타냅니다. 주요 번호는 `my_dev_nr`와 연결된 디바이스 드라이버를 고유하게 식별합니다.
+즉, `register_chrdev`는 문자 디바이스 드라이버를 등록하고, `device_create`는 그 등록된 드라이버에 대한 실제 디바이스 파일을 `/dev`에 생성하는 단계입니다.
 
-## 결론
-위의 단계와 출력은 "Device Numbers" 커널 모듈이 올바르게 작동함을 확인해 줍니다. 이 모듈은 `my_dev_nr`라는 문자 디바이스를 주요 장치 번호 `64`와 함께 성공적으로 등록했으며, 이 등록은 `/proc/devices` 파일을 통해 확인할 수 있습니다.
-
-이 실습은 리눅스 커널 모듈에서 디바이스 번호를 관리하는 방법을 이해하는 데 도움이 되며, 사용자 정의 장치를 만들고 다루는 데 필요한 기초를 제공합니다.
 
 ---
 
-# 실습 : 02_02 디바이스파일 생성방법(mknod 명령어)
+# 실습 : 02_01 디바이스파일 생성방법(mknod 명령어)
 
 ![2](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/68927307-634e-407a-9fe5-a947a62d4589)
 ![3](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/8750263e-4988-4760-b5f0-6e2ae64580fe)
@@ -113,7 +79,7 @@ kim@kimrihyeon:~/Linux_device_driver/02_Device_Numbers$ dmesg | tail -2
 
 ---
 
-# 02_03 디바이스 파일과 사용자프로그램의 상호작용
+# 02_02 디바이스 파일과 사용자프로그램의 상호작용
 
 
 ![4](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/d2af0aa5-09c2-4d5f-95fc-b2257999f7b6)
