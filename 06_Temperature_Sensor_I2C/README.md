@@ -1,5 +1,6 @@
-[BMP280.PDF](https://github.com/user-attachments/files/17457345/BMP280.PDF)# 07_Temperature_Sensor_I2C(BMP280) Driver
-
+# 07_Temperature_Sensor_I2C(BMP280) Driver
+#### 참고. 데이터시트
+[BMP280.PDF](https://github.com/user-attachments/files/17457345/BMP280.PDF)
 #### 1. I2C 설정 및 센서 연결
 BMP280 센서를 라즈베리 파이에 연결한 후, 다음 명령어를 사용하여 I2C 버스에서 센서가 올바르게 연결되었는지 확인하였습니다.
 
@@ -74,7 +75,7 @@ bmp_i2c_adapter = i2c_get_adapter(I2C_BUS_AVAILABLE);
  
 	/* Initialice the sensor */
 	i2c_smbus_write_byte_data(bmp280_i2c_client, 0xf5, 5<<5);
-  i2c_smbus_write_byte_data(bmp280_i2c_client, 0xf4, ((5<<5) | (5<<2) | (3<<0)));
+ 	i2c_smbus_write_byte_data(bmp280_i2c_client, 0xf4, ((5<<5) | (5<<2) | (3<<0)));
 	return ret;
 
 ```
@@ -96,7 +97,7 @@ s32 read_temperature(void) {
 	d3 = i2c_smbus_read_byte_data(bmp280_i2c_client, 0xFC);
 	raw_temp = ((d1<<16) | (d2<<8) | d3) >> 4;
 
-  // d1, d2, d3를 이용하여 온도를 계산할것입니다.
+ 	// d1, d2, d3를 이용하여 온도를 계산할것입니다.
 	// 이는 데이터 시트의 공식을 사용한것입니다.
 	/* Calculate temperature in degree */
 	var1 = ((((raw_temp >> 3) - (dig_T1 << 1))) * (dig_T2)) >> 11;
@@ -115,6 +116,4 @@ s32 read_temperature(void) {
 ![i2c_3](https://github.com/user-attachments/assets/38bb4fe6-41df-441b-a4d7-e9fa123d77e5)
 
 
-### 참고자료 bmp280 데이터시트
-[BMP280.PDF](https://github.com/user-attachments/files/17457343/BMP280.PDF)
 
