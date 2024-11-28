@@ -1,5 +1,7 @@
 # 14_The_Poll_Callback_in_LKM
 
+# Demo
+https://github.com/dlgus8648/Linux_device_driver/assets/139437162/e47dd496-e3ac-4e8c-8b6d-452d351b527c
 ## A. 코드 구현 방법
 이 코드는 GPIO 17에서 상승 에지(Rising Edge) 신호가 감지될 때 인터럽트를 발생시키고, 사용자 공간 애플리케이션이 `poll()` 시스템 호출을 통해 이벤트를 대기하고 처리할 수 있도록 하는 Linux 커널 모듈입니다. 함수 호출 순서는 다음과 같습니다.
 
@@ -76,6 +78,4 @@
 
 이 순서는 인터럽트가 발생할 때 `poll()`을 사용하는 사용자 애플리케이션에 이벤트를 전달하는 과정을 설명합니다.
 
-# Demo
-https://github.com/dlgus8648/Linux_device_driver/assets/139437162/e47dd496-e3ac-4e8c-8b6d-452d351b527c
 
