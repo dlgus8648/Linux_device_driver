@@ -18,6 +18,7 @@
 |[4. GPIO driver](https://github.com/dlgus8648/Linux_device_driver/tree/main/04_GPIO_Driver)|---|
 |[5. PWM Driver](https://github.com/dlgus8648/Linux_device_driver/tree/main/05_PWM_Driver)|---|
 |[06_Temperature_Sensor_I2C](https://github.com/dlgus8648/Linux_device_driver/tree/main/06_Temperature_Sensor_I2C)|---|
+|[06_1_ADXL345_I2C](https://github.com/dlgus8648/Linux_device_driver/tree/main/06_1_ADXL345_I2C)|---
 |[07_Temperature_Sensor_SPI/spi_bmp280](https://github.com/dlgus8648/Linux_device_driver/tree/main/07_Temperature_Sensor_SPI/spi_bmp280)|---|
 |[8. GPIO_IRQ](https://github.com/dlgus8648/Linux_device_driver/tree/main/08_GPIO_IRQ)|- request_irq<br>- Top half & bottom half|
 |[9. High Resolution Timer in a Linux Kerenel Module](https://github.com/dlgus8648/Linux_device_driver/tree/main/09_High_Resolution_Timer)|- hrtimer|
