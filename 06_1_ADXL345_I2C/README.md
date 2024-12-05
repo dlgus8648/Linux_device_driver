@@ -21,3 +21,5 @@
     };
 };
 ```
+
+![i2c_rasp](https://github.com/user-attachments/assets/c23849f5-7dc3-4eac-869f-359194464a1b)
