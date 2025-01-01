@@ -1,26 +1,59 @@
 
-# 02_Device Numbers Kernel Module
-# 관련 개념
+## 디바이스 파일과 디바이스 드라이버 등록
+
 ### 1. 디바이스 파일 (Device File)
-디바이스 파일은 커널의 하드웨어 장치나 가상 장치를 나타내는 특별한 유형의 파일입니다. 
-디바이스 파일을 사용하여 사용자는 하드웨어 장치에 접근할 수 있습니다.
 
+디바이스 파일은 Linux 운영 체제에서 하드웨어 장치나 가상 장치를 나타내는 파일입니다. 이러한 파일은 일반적으로 `/dev` 디렉토리에 위치하며, 사용자 공간 프로그램이 커널 공간의 디바이스 드라이버와 통신할 수 있게 해줍니다. 디바이스 파일을 통해 사용자는 하드웨어 장치에 접근하고 제어할 수 있습니다.
 
-### 2. 디바이스 파일 생성 및 드라이버 등록
-### 1. `register_chrdev`
-`register_chrdev`는 커널에 문자 디바이스 드라이버를 등록하는 함수입니다. 
-문자 디바이스는 `/dev` 디렉토리에서 특정 파일로 나타나며, 사용자 공간의 프로그램이 이를 통해 디바이스와 상호작용할 수 있습니다.
+### 2. 디바이스 번호
 
-**사용 예시**:
+디바이스 파일은 주번호(major number)와 부번호(minor number)로 식별됩니다.
+
+- **주번호 (Major Number)**: 디바이스와 연관된 드라이버를 식별합니다. 동일한 주번호를 여러 디바이스 드라이버가 공유할 수 있습니다.
+- **부번호 (Minor Number)**: 드라이버가 개별 물리적 또는 논리적 장치를 구분하는 데 사용합니다.
+
+### 3. 디바이스 드라이버 등록 및 디바이스 파일 생성
+
+디바이스 드라이버를 등록하고 디바이스 파일을 생성하는 과정은 다음과 같습니다:
+
+#### a) 디바이스 번호 할당
+
+먼저 디바이스 번호를 할당받아야 합니다. 이는 두 가지 방법으로 가능합니다.
+
 ```c
-register_chrdev(240, "my_device", &fops);
+// 디바이스 번호 수동할당
+int register_chrdev_region(dev_t from, unsigned count, const char *name);
+
+// 디바이스 번호 자동할당
+int alloc_chrdev_region(dev_t *dev, unsigned baseminor, unsigned count, const char *name);
 ```
-여기서 메이저 번호 240의 문자 디바이스를 등록하고, `fops`를 통해 그 디바이스의 연산 방식을 정의합니다.
 
-### 2. `device_create`
-`device_create`는 `register_chrdev`로 등록된 문자 디바이스에 실제로 `/dev` 디렉토리에 디바이스 파일을 생성하는 역할을 합니다. 이 함수는 일반적으로 `class_create`와 함께 사용되어, 디바이스 클래스를 생성하고 그 클래스에 속하는 디바이스를 만듭니다.
+`register_chrdev_region`은 특정 주번호를 요청할 때 사용하고, `alloc_chrdev_region`은 동적으로 주번호를 할당받을 때 사용합니다[6].
 
-즉, `register_chrdev`는 문자 디바이스 드라이버를 등록하고, `device_create`는 그 등록된 드라이버에 대한 실제 디바이스 파일을 `/dev`에 생성하는 단계입니다.
+#### b) 문자 디바이스 구조체 초기화 및 등록
+
+다음으로 `cdev` 구조체를 초기화하고 시스템에 등록합니다[4]:
+
+```c
+cdev_init(&my_cdev, &my_fops);
+cdev_add(&my_cdev, dev, 1);
+```
+
+#### c) 디바이스 클래스 생성
+
+`class_create` 함수를 사용하여 디바이스 클래스를 생성합니다[7]:
+
+```c
+struct class *my_class = class_create("my_class");
+```
+
+#### d) 디바이스 파일 생성
+
+마지막으로 `device_create` 함수를 사용하여 `/dev` 디렉토리에 실제 디바이스 파일을 생성합니다[7]:
+
+```c
+device_create(my_class, NULL, MKDEV(major, minor), NULL, "my_device");
+```
 
 
 ---
