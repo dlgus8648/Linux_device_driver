@@ -108,7 +108,7 @@ s32 read_temperature(void) {
 ```
 #### DEMO 사진
 ![i2ccccccc글미](https://github.com/user-attachments/assets/3ada72d5-76b9-4ba3-bf43-49cd799b0309)
-![i2c_11](https://github.com/user-attachments/assets/c0ac73e6-dc6a-4847-8d2c-4b75b4f72344)
+
 ![i2c_1](https://github.com/user-attachments/assets/dab6c00c-6110-4b47-bcad-26afc8a915bf)
 
 ![i2c_2](https://github.com/user-attachments/assets/9f03ccfd-22db-4d70-a78c-14c5e9e77905)
