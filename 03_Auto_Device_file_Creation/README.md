@@ -1,56 +1,73 @@
 
 # 03_Auto_Device_file_Creation
+# 관련 개념
 
-# 관련개념
+## 1. alloc_chrdev_region()
 
-### 1. `alloc_chrdev_region()`
-`alloc_chrdev_region()`은 캐릭터 디바이스를 등록할 때 주번호와 부번호를 커널에서 동적으로 할당받는 함수입니다.
-이 함수는 수동으로 주번호와 부번호를 할당하는 대신, 커널이 이를 자동으로 선택하도록 도와줍니다.
-- 캐릭터 디바이스를 등록할 때, 개발자가 고유한 주번호와 부번호를 지정할 수 있습니다.
-- 하지만 주번호 충돌을 피하기 위해 커널에 자동으로 주번호를 할당받는 것이 더 일반적입니다.
-- 이 함수는 캐릭터 디바이스 드라이버에서 주번호를 동적으로 할당하는 데 유용합니다.
+`alloc_chrdev_region()`은 캐릭터 디바이스를 등록할 때 주번호와 부번호를 커널에서 동적으로 할당받는 함수입니다. 이 함수는 수동으로 주번호와 부번호를 할당하는 대신, 커널이 이를 자동으로 선택하도록 도와줍니다.
 
-#### 함수 프로토타입:
+
+### 함수 프로토타입:
+
 ```c
 int alloc_chrdev_region(dev_t *dev, unsigned baseminor, unsigned count, const char *name);
 ```
 
-### 2. `Device_class()`
-`Device_class()`는 `struct class`와 관련된 개념으로, 리눅스 커널의 장치 모델에서 디바이스 클래스를 정의하는 데 사용됩니다.
-`struct class`는 디바이스의 종류를 표현하는 데 사용되며, 디바이스 드라이버에서 디바이스 파일을 생성할 때 이 클래스를 사용하여 `/sys/class/`에 해당 장치의 디렉터리를 자동으로 생성합니다.
-- 디바이스 클래스는 장치를 파일 시스템 계층에 나타낼 때 사용되며, `/dev` 디렉터리에 장치 파일을 생성하는 데 관여합니다.
-- 사용자가 장치 드라이버와 쉽게 상호작용할 수 있도록 장치를 구성하고 관리하는 데 도움을 줍니다.
+- `dev`: 할당된 디바이스 번호를 저장할 포인터
+- `baseminor`: 할당할 부번호의 시작 값 (일반적으로 0)
+- `count`: 할당할 연속적인 부번호의 개수
+- `name`: 디바이스 드라이버의 이름 (/proc/devices에 표시됨)
 
-#### 주요 함수:
-1. **`class_create()`**: 디바이스 클래스를 생성합니다.
+이 함수는 성공 시 0을, 실패 시 음수 오류 코드를 반환합니다.
+
+## 2. Device Class
+
+디바이스 클래스는 /sys/ 디렉토리 밑에 장치의 정보를 사용자에게 노출시킵니다.
+
+- 디바이스 클래스는 `/sys/class/` 디렉토리에 해당 장치의 정보를 노출시킵니다.
+- udev와 같은 사용자 공간 도구가 이 정보를 사용하여 `/dev` 디렉토리에 장치 파일을 동적으로 생성합니다.
+
+### 주요 함수:
+
+1. **class_create()**: 새로운 디바이스 클래스를 생성합니다.
    ```c
-   struct class *my_class;
-   my_class = class_create(THIS_MODULE, "my_device_class");
-
-   //생성된 클래스를 사용하여 실제 디바이스 파일을 생성합니다.
-   device_create(my_class, NULL, dev, NULL, "my_device");
-
-   //디바이스 클래스를 제거합니다.
-   class_destroy(my_class);
+   struct class *class_create(struct module *owner, const char *name);
    ```
 
-### 3. `cdev()`
-`cdev`는 캐릭터 디바이스를 커널에 등록하고 관리하기 새로운 방법입니다.
-고전적 방법으로는 문자 디바이스를 등록할 때는 register_chrdev() 함수를 사용하여 장치를 등록하고, unregister_chrdev() 함수를 사용하여 해제했습니다. /  
-최근 캐릭터 디바이스는 일반적으로 `struct cdev` 구조체로 정의되며, `cdev_init()` 및 `cdev_add()` 함수로 커널에 등록됩니다.
-- `cdev` 구조체는 캐릭터 디바이스의 주요 데이터를 포함하고, 파일 연산자(파일 오퍼레이션 함수)를 정의하며, 장치 드라이버가 파일 시스템에 통합되도록 합니다.
-
-#### 주요 함수:
+2. **device_create()**: 특정 클래스 내에 새 디바이스를 생성합니다.
    ```c
-   //struct cdev` 구조체를 초기화합니다.
-   struct cdev my_cdev;
-   cdev_init(&my_cdev, &my_fops);
+   struct device *device_create(struct class *class, struct device *parent,
+                                dev_t devt, void *drvdata, const char *fmt, ...);
+   ```
 
-   초기화된 `cdev` 구조체를 커널에 등록합니다.
+3. **class_destroy()**: 생성된 클래스를 제거합니다.
+   ```c
+   void class_destroy(struct class *cls);
+   ```
+
+## 3. cdev
+
+`cdev`는 문자 디바이스를 커널에 등록하고 관리하기 위한 실무적인 방법입니다. `struct cdev` 구조체는 캐릭터 디바이스의 주요 속성과 작업을 정의합니다.
+
+### 주요 함수:
+
+1. **cdev_init()**: `struct cdev` 구조체를 초기화합니다.
+   ```c
+   void cdev_init(struct cdev *cdev, const struct file_operations *fops);
+   ```
+
+2. **cdev_add()**: 초기화된 `cdev` 구조체를 커널에 등록합니다.
+   ```c
    int cdev_add(struct cdev *p, dev_t dev, unsigned count);
-   //등록된 `cdev` 구조체를 제거합니다.
+   ```
+
+3. **cdev_del()**: 등록된 `cdev` 구조체를 제거합니다.
+   ```c
    void cdev_del(struct cdev *cdev);
    ```
+
+
+
 
 ![1](https://github.com/dlgus8648/Linux_device_driver/assets/139437162/e1d54135-1c07-43d3-a42e-27c2ed2f7591)
 ## 설명
